@@ -33,7 +33,7 @@ def plotspectrum(plate, fiberID):
     plt.title(f'SDSS Spectrum - Plate {plate}, Fiber {fiberID}')
     plt.grid(alpha=0.3)
 
-    plt.show()
+    # plt.show()
     
     plt.figure(figsize=(11,7))
     plot_spectral_lines(plt.gca(), {k: v for k, v in SPECTRAL_LINES.items() if wavelength.min() < v < wavelength.max()})
@@ -44,7 +44,7 @@ def plotspectrum(plate, fiberID):
     plt.grid(alpha=0.3)
     norm_flux = normalize(flux, wavelength)
     plt.plot(wavelength, norm_flux, color='indigo', lw=0.5)
-    plt.show()
+    # plt.show()
 
 def plot_spectrum_and_template(plate, fiberID, template):
     sp = SDSS.get_spectra(plate=plate, fiberID=fiberID)[0]
@@ -71,4 +71,4 @@ def plot_spectrum_and_template(plate, fiberID, template):
                                     if obs_wavelength.min() < v < obs_wavelength.max()})
     plt.legend()
     plt.grid(alpha=0.3)
-    plt.show()
+    # plt.show()

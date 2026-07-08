@@ -39,3 +39,5 @@ startype(542, 514)
 
 classify_star(plate=283, fiberID=120, templates_dict=templates)
 startype(283, 120)
+
+plt.show()
