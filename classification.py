@@ -16,9 +16,9 @@ def classify_star(plate, fiberID, templates_dict, min_overlap_frac=0.75):
     best_score = np.inf
 
     for star_type, template in templates_dict.items():
-        temp_flux = template[0].data[0]
+        temp_flux = template[0]
         temp_flux = smooth_flux(temp_flux, window_length=51)
-        temp_header = template[0].header
+        temp_header = template[1]
         temp_loglam = temp_header['COEFF0'] + temp_header['COEFF1'] * np.arange(temp_flux.size)
         temp_wavelength = 10 ** temp_loglam
 

@@ -51,8 +51,8 @@ def plot_spectrum_and_template(plate, fiberID, template):
     obs_wavelength, obs_flux = get_spectrum_data(sp)
     obs_flux_norm = normalize(obs_flux, obs_wavelength)
 
-    temp_flux = template[0].data[0]
-    temp_header = template[0].header
+    temp_flux = template[0]
+    temp_header = template[1]
     temp_loglam = temp_header['COEFF0'] + temp_header['COEFF1'] * np.arange(temp_flux.size)
     temp_wavelength = 10 ** temp_loglam
 
