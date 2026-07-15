@@ -2,6 +2,7 @@ from plotting import *
 from classification import classify_star
 from spectrum import startype
 from templates import *
+from coordsearch import *
 
 def run_demo():
     cases = [
@@ -25,6 +26,8 @@ def run_demo():
     for plate, fiberID in test_cases:
         classify_star(plate, fiberID, templates)
         startype(plate, fiberID)
+
+    get_result(178, 19, True)
 
 if __name__ == "__main__":
     run_demo()

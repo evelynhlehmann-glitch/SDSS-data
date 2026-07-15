@@ -36,20 +36,24 @@ def plotspectrum(plate, fiberID):
     ax1.set_title(f'SDSS Spectrum - Plate {plate}, Fiber {fiberID}')
     ax1.grid(alpha=0.3)
 
-    # plt.show()
     ax2.set_xlabel('Wavelength (Å)')
     ax2.set_ylabel('Flux')
     ax2.set_title(f'SDSS Normalized Spectrum - Plate {plate}, Fiber {fiberID}')
     ax2.grid(alpha=0.3)
     norm_flux = normalize(flux, wavelength)
+
+    low = np.nanpercentile(norm_flux, 1) # setting y limits
+    high = np.nanpercentile(norm_flux, 99)
+    padding = 0.1 * (high - low)
+
+    ax2.set_ylim(low - padding, high + padding)
+
     ax2.plot(wavelength, norm_flux, color='indigo', lw=0.5)
     lines_to_plot = {k: v for k, v in SPECTRAL_LINES.items() if wavelength.min() < v < wavelength.max()}
     plot_spectral_lines(ax1, lines_to_plot)
     plot_spectral_lines(ax2, lines_to_plot)
     legend(fig, lines_to_plot)
     fig.subplots_adjust(hspace=0.3, right = 0.8, top = 0.9)
-
-    # plt.show()
 
 def plot_spectrum_and_template(plate, fiberID, template):
     sp = SDSS.get_spectra(plate=plate, fiberID=fiberID)[0]
