@@ -7,23 +7,24 @@ from plotting import *
 from spectrum import startype
 
 
-def get_result(value_ra, value_dec, plot):
-    coord = SkyCoord(ra=value_ra*u.degree, dec=value_dec*u.degree)
-    result = SDSS.query_region(
-        coord,
-        radius=3*u.arcmin,
-        spectro=True
-    )
-        
-    if result is None:
-        print("No spectra found.")
+def get_result(value_ra, value_dec, max_results = 20, a = .1):
+    query = f"""
+        select top {max_results}                        
+        ra, dec, plate, fiberID, class, subclass            
+        from specObjAll                      
+        where class = 'star'
+        and ra > {value_ra - a}
+        and ra < {value_ra + a}
+        and dec > {value_dec - a}
+        and dec < {value_dec + a}
+    """
+    res = SDSS.query_sql(query)
+    if res is None:
+        print("No spectra found")
     else:
-        result = result[:50]
-        for star in result:
+        for star in res:
             plate = star['plate']
             fiber = star['fiberID']
 
             classify_star(plate, fiber, templates)
             startype(plate, fiber)
-            if plot:
-                plotspectrum(plate, fiber)

@@ -22,7 +22,7 @@ template_files = [
 ]
 
 template_names = [
-    'O', 'OB_transition', 'B', 'A', 'A', 'FA_transition', 'F', 
+    'O1', 'O2', 'B', 'A', 'A', 'FA_transition', 'F', 
     'F', 'G', 'G', 'K', 'M1', 'M3', 'M5', 'M8', 'L1', 'MWD', 
     'Carbon', 'Carbon', 'Carbon', 'White_Dwarf', 'B_White_Dwarf', 
     'Low_metallicityu_K_subdwarf'
