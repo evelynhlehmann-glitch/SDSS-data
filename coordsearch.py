@@ -1,7 +1,7 @@
 from astroquery.sdss import SDSS
 from astropy.coordinates import SkyCoord
 import astropy.units as u
-from templates import *
+from template_library import *
 from classification import classify_star
 from plotting import *
 from spectrum import startype
@@ -26,5 +26,5 @@ def get_result(value_ra, value_dec, max_results = 20, a = .1):
             plate = star['plate']
             fiber = star['fiberID']
 
-            classify_star(plate, fiber, templates)
+            classify_star(plate, fiber, template_info)
             startype(plate, fiber)
