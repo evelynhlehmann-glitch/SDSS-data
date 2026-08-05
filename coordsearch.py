@@ -28,3 +28,5 @@ def get_result(value_ra, value_dec, max_results = 20, a = .1):
 
             classify_star(plate, fiber, template_info)
             startype(plate, fiber)
+            print()
+            print()

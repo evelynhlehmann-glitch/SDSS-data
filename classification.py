@@ -6,6 +6,15 @@ from spectrum import *
 from processing import *
 
 def classify_star(plate, fiberID, templates_dict, min_overlap_frac=0.75):
+    try:
+        sp = SDSS.get_spectra(
+            plate=plate,
+            fiberID=fiberID
+        )[0]
+    except Exception as e:
+        print(f"Couldn't retrieve spectrum: {e}")
+        return None
+
     sp = SDSS.get_spectra(plate=plate, fiberID=fiberID)[0]
     obs_wavelength, obs_flux = get_spectrum_data(sp)
 
@@ -56,7 +65,6 @@ def classify_star(plate, fiberID, templates_dict, min_overlap_frac=0.75):
 
     if best_match is not None:
         print(f"Best Match: {best_match} (Score={best_score:.5f})")
-        print(' ')
         return best_match
     else:
         print("No close match.")

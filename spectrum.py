@@ -6,7 +6,7 @@ def get_spectrum_data(spectrum):
     wavelength = 10 ** spectrum[1].data['loglam']
     return wavelength, flux
 
-def startype(plate, fiberID):
+def startype(plate, fiberID, return_value = False):
     query = f"""
         select ra, dec, class, subclass            
         from specObjAll                      
@@ -14,6 +14,11 @@ def startype(plate, fiberID):
         and fiberID = {fiberID}
     """
     res = SDSS.query_sql(query)
+    subclass = res['subclass']
     # query = SDSS.query_specobj(plate=plate, fiberID=fiberID, fields=['ra', 'dec', 'class', 'subclass'])
-    print(res)
+    if return_value == False:
+        print(res)
+    else:
+        return subclass
+    
     # This provides the SDSS recognized star type and is used only for testing purposes

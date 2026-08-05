@@ -9,6 +9,9 @@ def normalize(flux, wavelength, kernel_size=101):
     normalized_flux = flux / continuum
     return np.clip(normalized_flux, -3, 3)
 
+def normalize_flux(flux):
+    return flux / np.median(flux)
+
 def smooth_flux(flux, window_length=51, polyorder=2):
     return savgol_filter(flux, window_length=window_length, polyorder=polyorder)
 
