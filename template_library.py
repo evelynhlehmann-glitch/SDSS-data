@@ -32,7 +32,7 @@ for subclass in startypes:
         AND zWarning = 0
         order by snMedian desc
         """
-    res = SDSS.query_sql(query)
+    res = query_sdss_sql(query, required_columns=["plate", "mjd", "fiberID", "subclass"])
     if res is None or len(res) == 0:
         del startemplate[f'{subclass}']
         continue
