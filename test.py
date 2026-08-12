@@ -1,4 +1,3 @@
-from astroquery.sdss import SDSS
 from astropy.coordinates import SkyCoord
 import astropy.units as u
 from template_library import *
@@ -25,7 +24,9 @@ def test(max_results = 50):
         and snMedian > 25
         and zWarning = 0
     """
-    res = SDSS.query_sql(query)
+    res = query_sdss_sql(
+        query, required_columns=["plate", "fiberID", "subclass"]
+    )
 
     exact_count = 0
     letter_count = 0

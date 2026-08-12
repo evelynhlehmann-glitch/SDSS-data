@@ -1,4 +1,3 @@
-from astroquery.sdss import SDSS
 from astropy.coordinates import SkyCoord
 import astropy.units as u
 from template_library import *
@@ -18,7 +17,7 @@ def get_result(value_ra, value_dec, max_results = 20, a = .1):
         and dec > {value_dec - a}
         and dec < {value_dec + a}
     """
-    res = SDSS.query_sql(query)
+    res = query_sdss_sql(query, required_columns=["plate", "fiberID"])
     if res is None:
         print("No spectra found")
     else:
