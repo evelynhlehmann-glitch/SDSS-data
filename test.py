@@ -17,12 +17,10 @@ def test(max_results = 50):
         or subclass like 'F%'
         or subclass like 'G%'
         or subclass like 'K%'
-        or subclass like 'M%'
-        or subclass like 'Carbon%'
-        or subclass like 'wd%'
-        or subclass like 'L1%')
-        and snMedian > 25
+        or subclass like 'M%')
+        and snMedian > 30
         and zWarning = 0
+        order by snMedian desc
     """
     res = query_sdss_sql(
         query, required_columns=["plate", "fiberID", "subclass"]
@@ -43,10 +41,11 @@ def test(max_results = 50):
             print()
             continue
         else:
-            if result == subtype:
-                exact_count += 1
             if result[0] == subtype[0]:
                 letter_count += 1
+                typename = result[0] + result[1]
+                if typename in subtype:
+                    exact_count += 1
 
             print(f"Actual: {subtype}")
             print()
@@ -59,4 +58,8 @@ def test(max_results = 50):
 
 
 if __name__ == "__main__":
-    test(200)
+    test(5)
+
+# or subclass like 'Carbon%'
+# or subclass like 'wd%'
+# or subclass like 'L1%'

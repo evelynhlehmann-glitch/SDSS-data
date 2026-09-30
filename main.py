@@ -3,6 +3,7 @@ from classification import classify_star
 from spectrum import *
 from template_library import *
 from coordsearch import *
+from test import *
 
 def run_demo():
     # cases = [
@@ -11,7 +12,7 @@ def run_demo():
     # ]
     # for plate, fiberID in cases:
     #     # plotspectrum(plate, fiberID)
-    #     plot_spectrum_and_template(plate, fiberID, template_info['F3'])
+    #     plot_spectrum_and_template(plate, fiberID, template_info['A0'])
 
     # test_cases = [
     #     (3407, 367),
@@ -28,9 +29,9 @@ def run_demo():
     #     startype(plate, fiberID)
     #     print()
 
-    # get_result(175, 19, 5)
-    # get_result(111, 40, 10)
-    startype(390, 115)
+    # get_result(130, 40, 10, test = True)
+    # startype(390, 115)
+    test(50)
 
 if __name__ == "__main__":
     run_demo()

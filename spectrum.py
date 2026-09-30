@@ -73,13 +73,16 @@ def startype(plate, fiberID, return_value = False):
         from specObjAll                      
         where plate = {plate}
         and fiberID = {fiberID}
+        and class = "star"
     """
     res = query_sdss_sql(query, required_columns=["subclass"])
-    subclass = res['subclass']
+    subclass = ''
+    for star in res:
+        subclass = star['subclass']
     # query = SDSS.query_specobj(plate=plate, fiberID=fiberID, fields=['ra', 'dec', 'class', 'subclass'])
-    if return_value == False:
-        print(res)
-    else:
+    if return_value:
         return subclass
+    else:
+        print(res)
     
     # This provides the SDSS recognized star type and is used only for testing purposes

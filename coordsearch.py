@@ -6,7 +6,7 @@ from plotting import *
 from spectrum import startype
 
 
-def get_result(value_ra, value_dec, max_results = 20, a = .1):
+def get_result(value_ra, value_dec, max_results = 20, a = .1, test = False):
     query = f"""
         select top {max_results}                        
         ra, dec, plate, fiberID, class, subclass            
@@ -18,14 +18,45 @@ def get_result(value_ra, value_dec, max_results = 20, a = .1):
         and dec < {value_dec + a}
     """
     res = query_sdss_sql(query, required_columns=["plate", "fiberID"])
-    if res is None:
-        print("No spectra found")
-    else:
-        for star in res:
-            plate = star['plate']
-            fiber = star['fiberID']
+    if test == False:
+        if res is None:
+            print("No spectra found")
+        else:
+            for star in res:
+                plate = star['plate']
+                fiber = star['fiberID']
 
-            classify_star(plate, fiber, template_info)
-            startype(plate, fiber)
-            print()
-            print()
+                classify_star(plate, fiber, template_info)
+                startype(plate, fiber)
+                print()
+                print()
+    if test:
+        if res is None:
+            print("No spectra found")
+        else:
+            exact_count = 0
+            letter_count = 0
+            total = 0
+            for star in res:
+                plate = star['plate']
+                fiber = star['fiberID']
+                subtype = startype(plate, fiber, True)
+                result = classify_star(plate, fiber, template_info)
+                if result is None:
+                    print()
+                    continue
+                else:
+                    if result[0] == subtype[0]:
+                        letter_count += 1
+                        typename = result[0] + result[1]
+                        if typename in subtype:
+                            exact_count += 1
+
+                    print(f"Actual: {subtype}")
+                    print()
+                    total += 1
+            if total == 0:
+                print("Why would total be 0")
+            else:
+                print(f"Exact result: {exact_count / total:.1%}")
+                print(f"Letter result: {letter_count / total:.1%}")
