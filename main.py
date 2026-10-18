@@ -5,6 +5,7 @@ from template_library import *
 from coordsearch import *
 from test import *
 
+
 def run_demo():
     # cases = [
     #     (2934, 518),
@@ -31,7 +32,7 @@ def run_demo():
 
     # get_result(130, 40, 10, test = True)
     # startype(390, 115)
-    test(50)
+    test(50, test_class = "")
 
 if __name__ == "__main__":
     run_demo()

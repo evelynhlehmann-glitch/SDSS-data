@@ -2,7 +2,7 @@ from astroquery.sdss import SDSS
 from plotting import *
 from spectrum import *
 
-
+general = ["O", "B", "A", "F", "G", "K", "M"]
 
 startypes = ['O8%', 'O9%', 'B0%', 'B1%', 'B2%', 'B3%', 'B5%', 'B6%', 'B8%', 'B9%', 
     'A0%', 'A1%', 'A2%', 'A3%', 'A4%', 'A5%', 'A6%', 'A8%', 'A9%', 'F0%', 'F2%', 'F3%', 'F5%', 'F6%', 'F8%', 'F9%',
@@ -35,7 +35,7 @@ for subclass in startypes:
         AND zWarning = 0
         order by snMedian desc
         """
-    res = query_sdss_sql(query, required_columns=["plate", "mjd", "fiberID", "subclass"])
+    res = query_sdss_sql(query, required_columns=["plate", "fiberID", "subclass"])
     if res is None or len(res) == 0:
         del startemplate[f'{subclass}']
         continue

@@ -5,23 +5,39 @@ from classification import classify_star
 from plotting import *
 from spectrum import startype
 
-def test(max_results = 50):
-    query = f"""
-        select top {max_results}                        
-        ra, dec, plate, fiberID, class, subclass            
-        from specObjAll                      
-        where class = 'star'
-        and (subclass like 'A%'
-        or subclass like 'B%'
-        or subclass like 'O%'
-        or subclass like 'F%'
-        or subclass like 'G%'
-        or subclass like 'K%'
-        or subclass like 'M%')
-        and snMedian > 30
-        and zWarning = 0
-        order by snMedian desc
-    """
+def test(max_results = 50, test_class = ""):
+    if (test_class == ""):
+        query = f"""
+            select top {max_results}                        
+            ra, dec, plate, fiberID, class, subclass            
+            from specObjAll                      
+            where class = 'star'
+            and (subclass like 'A%'
+            or subclass like 'B%'
+            or subclass like 'O%'
+            or subclass like 'F%'
+            or subclass like 'G%'
+            or subclass like 'K%'
+            or subclass like 'M%')
+            and snMedian > 30
+            and zWarning = 0
+            order by snMedian desc
+        """
+    elif (test_class in templates or test_class in general):
+        query = f"""
+            select top {max_results}                        
+            ra, dec, plate, fiberID, class, subclass            
+            from specObjAll                      
+            where class = 'star'
+            and subclass like '{test_class}%'
+            and snMedian > 30
+            and zWarning = 0
+            order by snMedian desc
+        """
+    else:
+        print(f"{test_class} is not an accepted subtype")
+        return
+
     res = query_sdss_sql(
         query, required_columns=["plate", "fiberID", "subclass"]
     )
